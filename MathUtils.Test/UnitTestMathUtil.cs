@@ -9,8 +9,6 @@ namespace MathUtils.Test
     [TestFixture]
     public class CalculatorUnitTest
     {
-        private ILogger _logger;
-
         [SetUp]
         public void MockInitialize()
         {
@@ -18,20 +16,10 @@ namespace MathUtils.Test
 
             mock.Setup(p => p.Log(It.IsAny<string>())).Callback<string>(Console.WriteLine);
 
-
             _logger = mock.Object;
         }
 
-        [Test]
-        [TestCase(5, 3, ExpectedResult = 8)]
-        [TestCase(2, 1, ExpectedResult = 3)]
-        public int TestSumWithInIntRange(int x, int y)
-        {
-            var calc = new Calculator(_logger);
-
-            Assert.Throws<ExceptionValueMustBeMoreThanTen>(() => calc.Sum(10, 10));
-            return calc.Sum(x, y);
-        }
+        private ILogger _logger;
 
         [Test]
         public void TestDivByZero()
@@ -72,6 +60,49 @@ namespace MathUtils.Test
         }
 
         [Test]
+        [TestCase(-2, -3, ExpectedResult = 6)]
+        [TestCase(-1, 1, ExpectedResult = -1)]
+        public int TestMultiplyWithNegativeValue(int x, int y)
+        {
+            //Arrange
+            var calc = new Calculator(_logger);
+
+            //Act
+            //Assert
+            Assert.Throws<ExceptionValueMustBeMoreThanTen>(() => calc.Multiply(-2, -6));
+            return calc.Multiply(x, y);
+        }
+
+        [Test]
+        [TestCase(2, 3, ExpectedResult = 6)]
+        [TestCase(0, 1, ExpectedResult = 0)]
+        public int TestMultiplyWithPositiveValue(int x, int y)
+        {
+            //Arrange
+            var calc = new Calculator(_logger);
+
+            //Act
+            //Assert
+            Assert.Throws<ExceptionValueMustBeMoreThanTen>(() => calc.Multiply(2, 6));
+            return calc.Multiply(x, y);
+        }
+
+        [Test]
+        [TestCase(4, ExpectedResult = 2)]
+        [TestCase(0, ExpectedResult = 0)]
+        public int TestSqrtWithPositiveValue(int x)
+        {
+            //Arrange
+            var calc = new Calculator(_logger);
+
+            //Act
+            //Assert
+            Assert.Throws<ExceptionParamMustBeMoreThanZero>(() => calc.Sqrt(-2));
+            Assert.Throws<ExceptionValueMustBeMoreThanTen>(() => calc.Sqrt(121));
+            return calc.Sqrt(x);
+        }
+
+        [Test]
         public void TestSubstructWithPositiveValue()
         {
             //Arrange
@@ -90,48 +121,14 @@ namespace MathUtils.Test
         }
 
         [Test]
-        [TestCase(2, 3, ExpectedResult = 6)]
-        [TestCase(0, 1, ExpectedResult = 0)]
-        public int TestMultiplyWithPositiveValue(int x, int y)
+        [TestCase(5, 3, ExpectedResult = 8)]
+        [TestCase(2, 1, ExpectedResult = 3)]
+        public int TestSumWithInIntRange(int x, int y)
         {
-            //Arrange
             var calc = new Calculator(_logger);
 
-            //Act
-            //Assert
-            Assert.Throws<ExceptionValueMustBeMoreThanTen>(() => calc.Multiply(2, 6));
-            return calc.Multiply(x, y);
+            Assert.Throws<ExceptionValueMustBeMoreThanTen>(() => calc.Sum(10, 10));
+            return calc.Sum(x, y);
         }
-
-        [Test]
-        [TestCase(-2, -3, ExpectedResult = 6)]
-        [TestCase(-1, 1, ExpectedResult = -1)]
-        public int TestMultiplyWithNegativeValue(int x, int y)
-        {
-            //Arrange
-            var calc = new Calculator(_logger);
-
-            //Act
-            //Assert
-            Assert.Throws<ExceptionValueMustBeMoreThanTen>(() => calc.Multiply(-2, -6));
-            return calc.Multiply(x, y);
-        }
-
-        [Test]
-        [TestCase(4,  ExpectedResult = 2)]
-        [TestCase(0,  ExpectedResult = 0)]
-        public int TestSqrtWithPositiveValue(int x)
-        {
-            //Arrange
-            var calc = new Calculator(_logger);
-
-            //Act
-            //Assert
-            Assert.Throws<ExceptionParamMustBeMoreThanZero>(() => calc.Sqrt(-2));
-            Assert.Throws<ExceptionValueMustBeMoreThanTen>(() => calc.Sqrt(121));
-            return calc.Sqrt(x);
-        }
-
-
     }
 }

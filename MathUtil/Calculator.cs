@@ -8,35 +8,23 @@ namespace MathUtil
         void Log(string text);
     }
 
-    public class Logger : ILogger
-    {
-        public void Log(string text)
-        {
-            //logging
-        }
-    }
-
     public class Calculator
     {
         private readonly ILogger _logger;
 
+        public Calculator(ILogger logger) => _logger = logger;
+
         private void MyExceptionResult(int result)
         {
-            if (result > 10)
-            {
-                throw new ExceptionValueMustBeMoreThanTen();
-            }
+            if (result <= 10) return;
+            throw new ExceptionValueMustBeMoreThanTen();
         }
 
         private void MyExceptionParam(int result)
         {
-            if (result < 0)
-            {
-                throw new ExceptionParamMustBeMoreThanZero();
-            }
+            if (result >= 0) return;
+            throw new ExceptionParamMustBeMoreThanZero();
         }
-
-        public Calculator(ILogger logger) => _logger = logger;
 
         public int Sum(int x, int y)
         {

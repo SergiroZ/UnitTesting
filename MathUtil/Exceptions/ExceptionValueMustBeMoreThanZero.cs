@@ -1,6 +1,7 @@
 ﻿using System;
 
-namespace MathUtil.Exceptions {
+namespace MathUtil.Exceptions
+{
     public class ExceptionParamMustBeMoreThanZero : Exception
     {
         public ExceptionParamMustBeMoreThanZero()

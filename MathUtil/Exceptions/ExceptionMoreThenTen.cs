@@ -6,7 +6,7 @@ namespace MathUtil.Exceptions
     {
         public ExceptionValueMustBeMoreThanTen()
         {
-            Console.WriteLine("Value more than ten..");
+            Console.WriteLine("Exception: Value more than ten..");
         }
     }
 }
